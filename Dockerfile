@@ -11,7 +11,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json* ./
 # Clear npm cache and install fresh to avoid any caching issues
-RUN npm cache clean --force && npm install
+RUN npm cache clean --force && npm ci --no-audit
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -24,6 +24,8 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# Increase memory for Next.js build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 # Production image, copy all the files and run next
