@@ -1,4 +1,5 @@
 # Use official Node.js runtime as base image
+# Build cache bust: $(date) to force fresh rebuild and fix Server Actions error
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
