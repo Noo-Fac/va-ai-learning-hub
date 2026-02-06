@@ -1,5 +1,6 @@
 # Use official Node.js runtime as base image
 # Build cache bust: $(date) to force fresh rebuild and fix Server Actions error
+ARG BUILD_DATE=2026-02-06
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
@@ -9,7 +10,8 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json* ./
-RUN npm install
+# Clear npm cache and install fresh to avoid any caching issues
+RUN npm cache clean --force && npm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
