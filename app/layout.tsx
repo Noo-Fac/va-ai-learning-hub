@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../styles/globals.css'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { ParallaxProvider } from '../lib/parallax'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,13 +19,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+    <html lang="en" className="smooth-scroll">
+      <body className={`${inter.className} min-h-screen flex flex-col overflow-x-hidden`}>
+        <ParallaxProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </ParallaxProvider>
       </body>
     </html>
   )
